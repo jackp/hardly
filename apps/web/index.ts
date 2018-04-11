@@ -1,5 +1,7 @@
 import Vue from "vue";
 
+import App from "App.vue";
+
 new Vue({
-  template: "<h1>Hello world</h1>",
+  render: (h) => h(App),
 }).$mount("#app");
