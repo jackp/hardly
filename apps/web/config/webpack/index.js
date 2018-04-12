@@ -6,6 +6,7 @@ const path = require("path");
 const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
 
 // Default NODE_ENV to 'production'
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
@@ -41,6 +42,7 @@ const baseConfig = {
         loader: "ts-loader",
         options: {
           appendTsSuffixTo: [/\.vue$/],
+          transpileOnly: true,
         },
       },
     ],
@@ -48,6 +50,10 @@ const baseConfig = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(rootDir, "apps/web/index.html"),
+    }),
+    new ForkTsCheckerPlugin({
+      tslint: true,
+      vue: true,
     }),
   ],
 };

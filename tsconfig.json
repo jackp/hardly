@@ -11,5 +11,5 @@
     },
     "lib": ["dom", "es2015"]
   },
-  "include": ["./apps/**/*", "./src/**/*", "./typings/**/*"]
+  "include": ["apps/**/*", "src/**/*.ts", "src/**/*.vue"]
 }

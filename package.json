@@ -9,13 +9,20 @@
     "start": "NODE_ENV=development webpack-serve --config apps/web/config/webpack"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "firebase": "^4.12.1",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@firebase/app-types": "^0.1.2",
+    "@types/node": "^9.6.4",
+    "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^0.28.11",
+    "fork-ts-checker-webpack-plugin": "^0.4.1",
     "html-webpack-plugin": "^3.2.0",
+    "koa-connect": "^2.0.1",
     "ts-loader": "^4.2.0",
     "tsconfig-paths-webpack-plugin": "^3.0.3",
     "tslint": "^5.9.1",
