@@ -11,16 +11,16 @@ export interface State {
   user: User | null;
 }
 
-const userModule: Module<State, RootState> = {
-  namespaced: true,
+const sessionModule: Module<State, RootState> = {
   state: {
     user: null,
   },
   actions: {
-    loadApplicationData({ dispatch }) {
-      return dispatch("loadUser");
+    async loadApplicationData({ dispatch }) {
+      await dispatch("loadCurrentUser");
+      await dispatch("data/loadOrganizations");
     },
-    loadUser({ commit }) {
+    loadCurrentUser({ commit }) {
       if (auth.currentUser) {
         return db
           .collection("users")
@@ -48,10 +48,10 @@ const userModule: Module<State, RootState> = {
     },
   },
   mutations: {
-    setUser(state, payload: User) {
+    setUser(state, payload: User | null) {
       state.user = payload;
     },
   },
 };
 
-export default userModule;
+export default sessionModule;

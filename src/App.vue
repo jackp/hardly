@@ -17,7 +17,7 @@ export default Vue.extend({
   },
   created() {
     if (auth.currentUser) {
-      this.$store.dispatch("session/loadApplicationData").then(() => {
+      this.$store.dispatch("loadApplicationData").then(() => {
         this.isLoaded = true;
       });
     } else {

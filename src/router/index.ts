@@ -3,13 +3,15 @@ import VueRouter, { RouteConfig } from "vue-router";
 
 import store from "data/store";
 
-import LoginPage from "components/pages/auth/Login.vue";
-import LandingPage from "components/pages/LandingPage.vue";
+import IndexPage from "components/pages/IndexPage.vue";
+import LoginPage from "components/pages/LoginPage.vue";
+import OrganizationCreate from "components/pages/organization/Create.vue";
+import OrganizationShow from "components/pages/organization/Show.vue";
 
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
-  { path: "/", component: LandingPage },
+  { path: "/", component: IndexPage },
   { path: "/login", component: LoginPage },
   {
     path: "/logout",
@@ -17,6 +19,8 @@ const routes: RouteConfig[] = [
       store.dispatch("session/logout").then(() => next("/"));
     },
   },
+  { path: "/create", component: OrganizationCreate },
+  { path: "/:org", component: OrganizationShow },
 ];
 
 const router = new VueRouter({
