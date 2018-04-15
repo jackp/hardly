@@ -18,7 +18,7 @@ const sessionModule: Module<State, RootState> = {
   actions: {
     async loadApplicationData({ dispatch }) {
       await dispatch("loadCurrentUser");
-      await dispatch("data/loadOrganizations");
+      await dispatch("organizations/load");
     },
     loadCurrentUser({ commit }) {
       if (auth.currentUser) {
@@ -38,7 +38,7 @@ const sessionModule: Module<State, RootState> = {
       const { email, password } = payload;
       return auth
         .signInWithEmailAndPassword(email, password)
-        .then(() => dispatch("loadUser"))
+        .then(() => dispatch("loadCurrentUser"))
         .catch(console.error);
     },
     logout({ commit }) {

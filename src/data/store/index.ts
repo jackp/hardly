@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import data, { State as DataState } from "./modules/data";
+import organizations, {
+  State as OrganizationsState,
+} from "./modules/organizations";
 import session, { State as SessionState } from "./modules/session";
 
 Vue.use(Vuex);
@@ -10,12 +12,12 @@ const debug = process.env.NODE_ENV !== "production";
 
 export interface RootState {
   session: SessionState;
-  data: DataState;
+  organizations: OrganizationsState;
 }
 
 export default new Vuex.Store({
   modules: {
-    data,
+    organizations,
     session,
   },
   strict: debug,

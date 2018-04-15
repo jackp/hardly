@@ -31,7 +31,7 @@ export default Vue.extend({
   name: "AppSidebar",
   computed: {
     ...mapState({
-      organizations: (state: RootState) => state.data.organizations,
+      organizations: (state: RootState) => state.organizations,
     }),
   },
 });

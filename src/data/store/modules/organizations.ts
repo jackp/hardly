@@ -6,15 +6,11 @@ import { RootState } from "data/store";
 import { Organization, OrganizationMap } from "types/models/organization";
 import { User } from "types/models/user";
 
-export interface State {
-  organizations: OrganizationMap;
-}
+export type State = OrganizationMap;
 
-const dataModule: Module<State, RootState> = {
+const organizationsModule: Module<State, RootState> = {
   namespaced: true,
-  state: {
-    organizations: {},
-  },
+  state: {},
   actions: {
     createOrganization({ commit, rootState }, payload) {
       return db
@@ -24,46 +20,46 @@ const dataModule: Module<State, RootState> = {
           ...payload,
         })
         .then((doc) => {
-          commit("addOrganization", {
+          commit("update", {
             id: doc.id,
             ...payload,
           });
         });
     },
-    loadOrganizations({ commit, rootState }) {
+    load({ commit, rootState }) {
       return db
         .collection("organizations")
         .where("owner", "==", rootState.session.user!.id)
         .get()
         .then((querySnapshot) => {
-          const organizations: OrganizationMap = {};
+          const orgs: OrganizationMap = {};
 
           querySnapshot.forEach((doc) => {
             const org = doc.data();
-            organizations[org.name] = {
+            orgs[org.name] = {
               id: doc.id,
               ...org,
             };
           });
 
-          commit("setOrganizations", organizations);
+          commit("set", orgs);
         });
     },
   },
   getters: {
-    organizationByName: (state) => (name: string) => state.organizations[name],
+    organizationByName: (state) => (name: string) => state[name],
   },
   mutations: {
-    setOrganizations(state, payload) {
-      state.organizations = payload;
+    set(state, payload) {
+      state = Object.assign(state, payload);
     },
-    addOrganization(state, payload) {
-      state.organizations = {
-        ...state.organizations,
-        [payload.name]: payload,
+    update(state, payload) {
+      state[payload.name] = {
+        ...state[payload.name],
+        ...payload,
       };
     },
   },
 };
 
-export default dataModule;
+export default organizationsModule;

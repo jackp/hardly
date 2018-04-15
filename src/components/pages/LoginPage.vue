@@ -24,7 +24,7 @@ export default Vue.extend({
   },
   methods: {
     login() {
-      this.$store.dispatch("session/login", this.loginForm).then(() => {
+      this.$store.dispatch("login", this.loginForm).then(() => {
         this.$router.push("/");
       });
     },

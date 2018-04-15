@@ -21,7 +21,7 @@ export default Vue.extend({
     organization(): Organization {
       const { org } = this.$route.params;
 
-      return this.$store.getters.organizationByName(org);
+      return this.$store.getters["data/organizationByName"](org);
     },
   },
 });
