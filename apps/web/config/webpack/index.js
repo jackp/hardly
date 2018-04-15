@@ -18,30 +18,22 @@ const destDir = path.resolve(rootDir, "apps/web/build");
 
 const baseConfig = {
   context: rootDir,
-  entry: ["./apps/web/index.ts"],
+  entry: ["./apps/web/index.tsx"],
   output: {
     path: destDir,
     filename: "[name].[hash].js",
     publicPath: "/",
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".vue", ".js"],
-    alias: {
-      vue$: "vue/dist/vue.esm.js",
-    },
+    extensions: [".tsx", ".ts", ".jsx", ".js"],
     plugins: [new TsconfigPathsPlugin()],
   },
   module: {
     rules: [
       {
-        test: /\.vue$/,
-        loader: "vue-loader",
-      },
-      {
         test: /\.tsx?$/,
         loader: "ts-loader",
         options: {
-          appendTsSuffixTo: [/\.vue$/],
           transpileOnly: true,
         },
       },
@@ -53,7 +45,6 @@ const baseConfig = {
     }),
     new ForkTsCheckerPlugin({
       tslint: true,
-      vue: true,
     }),
   ],
 };

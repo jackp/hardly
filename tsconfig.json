@@ -5,11 +5,12 @@
     "strict": true,
     "module": "es2015",
     "moduleResolution": "node",
+    "jsx": "react",
     "sourceMap": true,
     "paths": {
       "*": ["*", "src/*"]
     },
     "lib": ["dom", "es2015"]
   },
-  "include": ["apps/**/*", "src/**/*.ts", "src/**/*.vue"]
+  "include": ["apps/**/*", "src/**/*"]
 }
