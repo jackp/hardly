@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "target": "es5",
     "strict": true,
     "module": "es2015",
     "moduleResolution": "node",
     "jsx": "react",
+    "experimentalDecorators": true,
     "sourceMap": true,
     "paths": {
       "*": ["*", "src/*"]
