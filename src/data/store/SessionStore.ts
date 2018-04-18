@@ -1,8 +1,9 @@
-import { observable, computed } from "mobx";
+import { observable, action, computed } from "mobx";
 
-import { RootStore } from "../store";
+import RootStore from "../store";
 import { auth } from "data/firebase";
 import User from "data/models/User";
+import LoginPage from "components/pages/Auth/Login";
 
 class SessionStore {
   public currentUser: User | undefined;
@@ -29,6 +30,19 @@ class SessionStore {
     } else {
       return true;
     }
+  }
+
+  @action.bound
+  public async login(email: string, pass: string) {
+    const user = await auth.signInWithEmailAndPassword(email, pass);
+    this.currentUser = new User(user.uid);
+  }
+
+  @action.bound
+  public async logout() {
+    await auth.signOut();
+
+    this.currentUser = undefined;
   }
 }
 

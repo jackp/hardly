@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 
-import { RootStore } from "../store";
+import RootStore from "../store";
 import User from "data/models/User";
 
 class UserStore {

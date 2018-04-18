@@ -1,12 +1,35 @@
 import * as React from "react";
+import { inject } from "mobx-react";
 import { Redirect } from "react-router";
 
-import { auth } from "data/firebase";
+import AppState from "data/store";
 
-const Logout = async () => {
-  await auth.signOut();
+interface IProps {
+  store: AppState;
+}
 
-  return <Redirect to="/" />;
-};
+interface IState {
+  complete: boolean;
+}
 
-export default Logout;
+@inject("store")
+class LogoutPage extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      complete: false,
+    };
+  }
+  public componentWillMount() {
+    const { store } = this.props;
+    store.session.logout().then(() => {
+      this.setState({ complete: true });
+    });
+  }
+
+  public render() {
+    return this.state.complete ? <Redirect to="/" /> : null;
+  }
+}
+
+export default LogoutPage;

@@ -1,7 +1,7 @@
 import SessionStore from "./SessionStore";
 import UserStore from "./UserStore";
 
-class RootStore {
+class AppState {
   public session: SessionStore;
   public users: UserStore;
 
@@ -12,6 +12,4 @@ class RootStore {
   }
 }
 
-export default RootStore;
-
-export { RootStore, SessionStore, UserStore };
+export default AppState;

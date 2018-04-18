@@ -1,40 +1,38 @@
 import * as React from "react";
-import { Route, Switch } from "react-router";
-import { observer, inject } from "mobx-react";
+import { Redirect, Route, Switch, withRouter, Router } from "react-router";
+import { observer, Provider } from "mobx-react";
+import { History } from "history";
 
-import { SessionStore } from "data/store";
+import AppState from "data/store";
 
-// import PrivateRoute from "containers/PrivateRoute";
 import HomePage from "components/pages/Home";
 import LoginPage from "components/pages/Auth/Login";
 import LogoutPage from "components/pages/Auth/Logout";
 import OrganizationPage from "components/pages/Organization";
 
-export interface IProps {
-  session?: SessionStore;
+interface IProps {
+  store: AppState;
+  history: History;
 }
 
-@inject(({ store }) => ({
-  session: store.session,
-}))
 @observer
 class App extends React.Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   public render() {
-    const { session } = this.props;
+    const { store, history } = this.props;
 
-    return session!.isInitialized ? (
-      <div id="app">
-        <header>Main Header</header>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/logout" render={LogoutPage} />
-        </Switch>
-      </div>
+    return store.session.isInitialized ? (
+      <Router history={history}>
+        <Provider store={store} history={history}>
+          <div id="app">
+            <header>App Header</header>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/logout" component={LogoutPage} />
+            </Switch>
+          </div>
+        </Provider>
+      </Router>
     ) : (
       <div>Loading...</div>
     );
