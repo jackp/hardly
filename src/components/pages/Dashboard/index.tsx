@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import AppPage from "components/templates/AppPage";
+
 const DashboardPage: React.SFC = () => (
-  <div>
+  <AppPage>
     <h1>DashboardPage</h1>
-    <Link to="/logout">Logout</Link>
-  </div>
+  </AppPage>
 );
 
 export default DashboardPage;

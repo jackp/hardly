@@ -5,30 +5,49 @@ import { History } from "history";
 
 import AppState from "data/store";
 
-import HomePage from "components/pages/Home";
+import DashboardPage from "components/pages/Dashboard";
+import LandingPage from "components/pages/Landing";
 import LoginPage from "components/pages/Auth/Login";
 import LogoutPage from "components/pages/Auth/Logout";
 import OrganizationPage from "components/pages/Organization";
 
-interface IProps {
+import AppPage from "components/templates/AppPage";
+import StaticPage from "components/templates/StaticPage";
+
+interface Props {
   store: AppState;
   history: History;
 }
 
+interface State {
+  initialized: boolean;
+}
+
 @observer
-class App extends React.Component<IProps> {
+class App extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      initialized: false,
+    };
+
+    props.store
+      .loadInitialData()
+      .then(() => this.setState({ initialized: true }));
+  }
+
   public render() {
     const { store, history } = this.props;
 
-    return store.session.isInitialized ? (
+    return this.state.initialized ? (
       <Router history={history}>
         <Provider store={store} history={history}>
           <div id="app">
-            <header>App Header</header>
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <Route exact path="/" render={this.indexRouteComponent} />
               <Route path="/login" component={LoginPage} />
               <Route path="/logout" component={LogoutPage} />
+              <Route path="*" component={OrganizationPage} />
             </Switch>
           </div>
         </Provider>
@@ -37,6 +56,12 @@ class App extends React.Component<IProps> {
       <div>Loading...</div>
     );
   }
+
+  private indexRouteComponent = () => {
+    const { currentUser } = this.props.store.session;
+
+    return currentUser ? <DashboardPage /> : <LandingPage />;
+  };
 }
 
 export default App;

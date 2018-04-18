@@ -1,7 +1,8 @@
 import { observable, action, computed } from "mobx";
+import { DocumentSnapshot } from "@firebase/firestore-types";
 
 import RootStore from "../store";
-import { auth } from "data/firebase";
+import { db, auth } from "data/firebase";
 import User from "data/models/User";
 import LoginPage from "components/pages/Auth/Login";
 
@@ -11,25 +12,11 @@ class SessionStore {
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
-
-    if (auth.currentUser) {
-      this.currentUser = new User(auth.currentUser.uid);
-      this.rootStore.users.add(this.currentUser);
-    }
   }
 
   @computed
   get isAuthenticated(): boolean {
     return !!this.currentUser;
-  }
-
-  @computed
-  get isInitialized(): boolean {
-    if (this.currentUser) {
-      return this.currentUser.loaded;
-    } else {
-      return true;
-    }
   }
 
   @action.bound

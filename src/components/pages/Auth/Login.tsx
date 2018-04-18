@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react";
 import { History } from "history";
 
 import AppState from "data/store";
+import StaticPage from "components/templates/StaticPage";
 
 @inject("store", "history")
 @observer
@@ -18,14 +19,14 @@ class LoginPage extends React.Component<{ store: AppState; history: History }> {
 
   public render() {
     return (
-      <div>
+      <StaticPage>
         <h1>Login Page</h1>
         <form onSubmit={this.handleSubmit}>
           <input type="text" placeholder="Email" ref={this.emailRef} />
           <input type="password" placeholder="Password" ref={this.passRef} />
           <button type="submit">Login</button>
         </form>
-      </div>
+      </StaticPage>
     );
   }
 
